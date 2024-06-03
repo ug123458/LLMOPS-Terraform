@@ -216,11 +216,10 @@ resource "null_resource" "attach_mlws_to_aks" {
 ############################################################################################################
 
 resource "null_resource" "prompt_runtime_create" {
-
   provisioner "local-exec" {
     command = <<EOF
     access_token=$(az account get-access-token --query accessToken -o tsv)
-    curl --http1.1 --request POST --url 'https://ml.azure.com/api/centralindia/flow/api/subscriptions/${data.azurerm_client_config.client_config.subscription_id}/resourceGroups/${azurerm_resource_group.resource_group.name}/providers/Microsoft.MachineLearningServices/workspaces/${azurerm_machine_learning_workspace.machine_learning_workspace.name}/FlowRuntimes/${var.prompt-runtime}' -H "Authorization: Bearer $access_token" -H 'Content-Type: application/json' -d "{   \"runtimeType\": \"ComputeInstance\",\"computeInstanceName\": \"${azurerm_machine_learning_compute_instance.machine_learning_compute_instance.name}\"}"
+    curl --http1.1 --request POST --url 'https://ml.azure.com/api/${var.region}/flow/api/subscriptions/${data.azurerm_client_config.client_config.subscription_id}/resourceGroups/${azurerm_resource_group.resource_group.name}/providers/Microsoft.MachineLearningServices/workspaces/${azurerm_machine_learning_workspace.machine_learning_workspace.name}/FlowRuntimes/${var.prompt-runtime}' -H "Authorization: Bearer $access_token" -H 'Content-Type: application/json' -d "{   \"runtimeType\": \"ComputeInstance\",\"computeInstanceName\": \"${azurerm_machine_learning_compute_instance.machine_learning_compute_instance.name}\"}"
   EOF
   }
 

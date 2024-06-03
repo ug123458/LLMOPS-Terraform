@@ -4,7 +4,7 @@ variable "workload" {
 }
 
 variable "region" {
-  default = "centralindia"
+  default = "eastus"
 }
 
 variable "region_short" {
